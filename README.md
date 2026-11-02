@@ -10,7 +10,7 @@ The first capability is a retrieval-augmented generation (RAG) skill for Indones
 
 ## Current status
 
-**Documentation foundation — before Phase 0.** The architecture, roadmap, contracts, and development conventions are documented. Foundational ADRs 000–002 are accepted. The application and workspace have not yet been implemented.
+**Phase 0 in progress — workspace bootstrap implemented.** The `uv` workspace, package skeletons, quality gates, pre-commit, and CI definitions are in place. Pull request and CI verification are still pending. Next: the corpus checklist, core contracts, and documentation sweep.
 
 See the [development roadmap](docs/roadmap.md) for phases, deliverables, gates, and exit criteria.
 
@@ -35,9 +35,9 @@ See the [development roadmap](docs/roadmap.md) for phases, deliverables, gates, 
 - **Build toward a product incrementally:** the first RAG skill is a foundation for a future assistant, not a claim that the full assistant already exists.
 - **Make the baseline reproducible:** pin environments, version datasets and prompts, and record what produced each result.
 
-## Planned repository layout
+## Repository layout
 
-This is a target layout and will be introduced incrementally. Bootstrap files are added in Phase 0; the API and demo are added later.
+The workspace bootstrap is implemented. Later-phase components are marked as planned and will be introduced incrementally.
 
 ```text
 easy-sidekick/
@@ -72,23 +72,34 @@ easy-sidekick/
 │   ├── data-card.md                      # Phase 4
 │   └── model-card.md                     # Phase 4
 ├── reports/                              # Generated run artifacts, ignored by git
-├── tests/                                # Cross-package and integration tests
-├── .github/workflows/                    # CI, Phase 0
+├── tests/                                # Unit, contract, and integration tests
+├── tools/                                # Repository tooling, including check_docs.py
+├── .github/workflows/                    # CI
 ├── .env.example                          # Placeholder configuration only
 ├── .gitignore
 ├── .pre-commit-config.yaml
+├── .python-version                       # Python 3.14
+├── .secrets.baseline                     # detect-secrets baseline
 ├── CHANGELOG.md                          # Phase 4
 ├── Makefile
 ├── pyproject.toml
 ├── uv.lock
-└── docker-compose.yml
+└── docker-compose.yml                    # Qdrant in Phase 1
 ```
 
 `apps/api` is a `uv` workspace member when introduced. The API is initially a thin interface for the RAG skill; future phases may extend it with a chat client, orchestration, and a skill registry. A demo, if present, must consume the API rather than bypass it.
 
 ## Development setup
 
-Setup instructions and runnable commands will be added as the workspace is implemented in Phase 0. Until then, the [development guide](docs/development.md) describes the planned workspace, commands, CI stages, and security conventions.
+The workspace uses Python 3.14 and `uv`. `make setup` installs Python dependencies and pre-commit hooks. Use the Make targets for reproducible local checks:
+
+```bash
+make setup
+make check
+make docs-check
+```
+
+`make format` formats Python with Ruff. Use `uv run --all-packages <command>` for ad-hoc commands inside the workspace. CI runs the same `make check` and `make security` targets. See the [development guide](docs/development.md) for package details, CI stages, and formatting conventions.
 
 ## Language convention
 

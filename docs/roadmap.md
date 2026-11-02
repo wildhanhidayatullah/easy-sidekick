@@ -2,7 +2,7 @@
 
 ## Current status
 
-**Documentation foundation — before Phase 0.** Foundational ADRs 000–002 are accepted. Implementation begins with Phase 0. Progress is tracked by deliverables and gates rather than calendar estimates.
+**Phase 0 in progress — P00-02 workspace bootstrap implemented (pending PR/CI verification).** Foundational ADRs 000–002 are accepted. Remaining Phase 0 work: P00-01a/P00-01b corpus preparation, P00-03 core contracts, and P00-04 documentation sweep. Progress is tracked by deliverables and gates rather than calendar estimates.
 
 ## How to read this roadmap
 
@@ -180,4 +180,5 @@ The evaluation set uses primary categories: direct factual, multi-source, ambigu
 | Documentation drifts from implementation                      | Keep one source of truth per topic, run link checks in CI, and review roadmap/ADR updates with material changes.                              |
 | API abuse if the demo is exposed                              | Keep v1.0 local-only by default; require API keys, rate limits, and a CORS allowlist before public exposure.                                  |
 | Dependency or image supply-chain risk                         | Commit `uv.lock`, pin images and GitHub Actions, run dependency audits, and update deliberately.                                              |
+| Python 3.14 support for the Phase 1 ML stack                  | Verify `torch`, `bge-m3`, and `qdrant-client` wheels during P01-03; fall back to 3.13 only through an ADR if required.                        |
 | Targets are not reached                                       | Report measured results and failure causes honestly; treat targets as hypotheses, not release promises.                                       |
