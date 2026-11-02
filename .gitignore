@@ -4,7 +4,11 @@
 # Environment and secrets
 .env
 .env.*
+.envrc
 !.env.example
+*.pem
+*.key
+.direnv/
 
 # Python
 __pycache__/
@@ -15,6 +19,8 @@ venv/
 .mypy_cache/
 .ruff_cache/
 .coverage
+.coverage.*
+coverage.xml
 htmlcov/
 dist/
 build/
@@ -26,6 +32,11 @@ build/
 /reports/
 /.cache/
 /models/
+*.gguf
+*.safetensors
+*.bin
+*.pt
+*.onnx
 
 # OS and editor
 .DS_Store

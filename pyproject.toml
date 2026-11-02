@@ -1,0 +1,58 @@
+[project]
+name = "easy-sidekick"
+version = "0.1.0"
+description = "An extensible LLM assistant platform with a measured RAG foundation."
+requires-python = ">=3.14,<3.15"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "detect-secrets",
+    "mypy",
+    "pip-audit",
+    "pre-commit",
+    "pytest",
+    "pytest-cov",
+    "ruff",
+]
+
+[tool.uv]
+package = false
+required-version = "==0.12.8"
+
+[tool.uv.workspace]
+members = ["packages/*", "skills/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+src = ["packages/rag-core/src", "skills/indonesian-labor-regulations/src"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "B", "UP", "SIM", "RUF"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+warn_unused_configs = true
+files = ["packages", "skills", "tests", "tools"]
+mypy_path = [
+    "packages/rag-core/src",
+    "skills/indonesian-labor-regulations/src",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = ["-ra", "--strict-markers"]
+
+[tool.coverage.run]
+branch = true
+source = ["rag_core", "indonesian_labor_regulations", "tools"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
