@@ -2,7 +2,7 @@
 
 ## Status and intent
 
-This document describes the target architecture. The repository is still in its documentation foundation stage; the components below will be implemented incrementally according to the [roadmap](roadmap.md). Foundational decisions are recorded in [ADR-000](adr/000-monorepo-and-skill-architecture.md), [ADR-001](adr/001-llm-and-embedding-provider-strategy.md), and [ADR-002](adr/002-initial-technology-baseline.md).
+This document describes the target architecture. Phase 0 is in progress: the `uv` workspace and package skeletons exist, while the components below remain incremental targets according to the [roadmap](roadmap.md). Foundational decisions are recorded in [ADR-000](adr/000-monorepo-and-skill-architecture.md), [ADR-001](adr/001-llm-and-embedding-provider-strategy.md), and [ADR-002](adr/002-initial-technology-baseline.md).
 
 The first deliverable is a RAG skill for Indonesian labor regulations. The shared engine stays independent of that domain so later skills and assistant workflows can reuse it.
 
