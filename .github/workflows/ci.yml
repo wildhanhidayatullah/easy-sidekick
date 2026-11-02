@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Quality checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # pragma: allowlist secret (public v6.0.0 commit)
+        with:
+          persist-credentials: false
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # pragma: allowlist secret (public v10.3.3 commit)
+        with:
+          python-version: "3.14"
+          enable-cache: true
+
+      - name: Install locked workspace
+        run: uv sync --all-packages --locked
+
+      - name: Run quality checks
+        run: make check
+
+      - name: Run pre-commit hooks
+        run: uv run --all-packages pre-commit run --all-files --show-diff-on-failure
+
+  security:
+    name: Security checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # pragma: allowlist secret (public v6.0.0 commit)
+        with:
+          persist-credentials: false
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # pragma: allowlist secret (public v10.3.3 commit)
+        with:
+          python-version: "3.14"
+          enable-cache: true
+
+      - name: Install locked workspace
+        run: uv sync --all-packages --locked
+
+      - name: Run security checks
+        run: make security
